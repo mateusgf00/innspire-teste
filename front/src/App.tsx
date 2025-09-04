@@ -1,30 +1,48 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import styled from 'styled-components'
-import Home from './pages/Home.tsx'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './contexts/AuthContext';
+import { LoginPage } from './pages/login/Index';
+import { RegisterPage } from './pages/register/Index';
 
-const AppContainer = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`
 
-const MainContent = styled.main`
-  flex: 1;
-  padding-top: 0;
-`
 
 function App() {
   return (
-    <Router>
-      <AppContainer>
-        <MainContent>
+    <AuthProvider>
+      <Router>
+        <div className="App">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
-        </MainContent>
-      </AppContainer>
-    </Router>
-  )
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#fff',
+                color: '#374151',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                border: '1px solid #e5e7eb',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
