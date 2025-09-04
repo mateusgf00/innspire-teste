@@ -45,14 +45,6 @@ export function Header() {
             >
               Projetos
             </Link>
-            {user?.role === UserRole.ADMIN && (
-              <Link
-                to="/admin"
-                className="text-gray-700 hover:text-hero-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Administração
-              </Link>
-            )}
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -77,23 +69,6 @@ export function Header() {
 
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                    <Link
-                      to="/profile"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      <User className="mr-2 h-4 w-4" />
-                      Perfil
-                    </Link>
-                    <Link
-                      to="/settings"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      <Settings className="mr-2 h-4 w-4" />
-                      Configurações
-                    </Link>
-                    <hr className="my-1" />
                     <button
                       onClick={handleLogout}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -136,16 +111,6 @@ export function Header() {
               >
                 Projetos
               </Link>
-              {user?.role === UserRole.ADMIN && (
-                <Link
-                  to="/admin"
-                  className="text-gray-700 hover:text-hero-primary block px-3 py-2 rounded-md text-base font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Administração
-                </Link>
-              )}
-              
               <hr className="my-2" />
               
               <div className="px-3 py-2">

@@ -335,6 +335,7 @@ export function ProjectForm({ project, onSuccess, onCancel, isModal = false }: P
                       max="100"
                       step="5"
                       {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                       style={{
                         background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${field.value}%, #E5E7EB ${field.value}%, #E5E7EB 100%)`

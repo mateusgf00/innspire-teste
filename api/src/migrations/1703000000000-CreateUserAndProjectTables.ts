@@ -6,22 +6,39 @@ export class InitialMigration1703000000000 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
 
-        await queryRunner.query(`
-            CREATE TYPE "public"."users_role_enum" AS ENUM('hero', 'admin')
+        const roleEnumExists = await queryRunner.query(`
+            SELECT 1 FROM pg_type WHERE typname = 'users_role_enum'
         `);
+        
+        if (!roleEnumExists.length) {
+            await queryRunner.query(`
+                CREATE TYPE "public"."users_role_enum" AS ENUM('hero', 'admin')
+            `);
+        }
 
-        await queryRunner.query(`
-            CREATE TYPE "public"."users_character_enum" AS ENUM(
-                'marvel_spiderman', 'marvel_ironman', 'marvel_captain_america', 
-                'marvel_thor', 'marvel_hulk', 'marvel_black_widow',
-                'dc_batman', 'dc_superman', 'dc_wonder_woman', 
-                'dc_flash', 'dc_green_lantern', 'dc_aquaman'
-            )
+        const characterEnumExists = await queryRunner.query(`
+            SELECT 1 FROM pg_type WHERE typname = 'users_character_enum'
         `);
-
-        await queryRunner.query(`
-            CREATE TYPE "public"."projects_status_enum" AS ENUM('pending', 'in_progress', 'completed')
+        
+        if (!characterEnumExists.length) {
+            await queryRunner.query(`
+                CREATE TYPE "public"."users_character_enum" AS ENUM(
+                    'marvel_spiderman', 'marvel_ironman', 'marvel_captain_america', 
+                    'marvel_thor', 'marvel_hulk', 'marvel_black_widow',
+                    'dc_batman', 'dc_superman', 'dc_wonder_woman', 
+                    'dc_flash', 'dc_green_lantern', 'dc_aquaman'
+                )
+            `);
+        }
+        const statusEnumExists = await queryRunner.query(`
+            SELECT 1 FROM pg_type WHERE typname = 'projects_status_enum'
         `);
+        
+        if (!statusEnumExists.length) {
+            await queryRunner.query(`
+                CREATE TYPE "public"."projects_status_enum" AS ENUM('pending', 'in_progress', 'completed')
+            `);
+        }
 
         await queryRunner.query(`
             CREATE TABLE "users" (

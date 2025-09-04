@@ -130,15 +130,6 @@ export function DashboardPage() {
               }
             </p>
           </div>
-          {user?.role === UserRole.ADMIN && (
-            <Button 
-              className="mt-4 sm:mt-0"
-              onClick={() => setShowCreateModal(true)}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Novo Projeto
-            </Button>
-          )}
         </div>
 
         {stats && (
