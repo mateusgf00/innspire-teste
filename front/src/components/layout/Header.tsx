@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 import { getCharacterInfo } from '../../utils/characters';
 import { UserRole } from '../../types/auth';
-import { LogOut, Menu, X, User, Settings } from 'lucide-react';
+import { LogOut, Menu, X} from 'lucide-react';
 
 export function Header() {
   const { user, logout } = useAuth();
@@ -126,21 +126,6 @@ export function Header() {
                   </div>
                 </div>
               </div>
-              
-              <Link
-                to="/profile"
-                className="text-gray-700 hover:text-hero-primary block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Perfil
-              </Link>
-              <Link
-                to="/settings"
-                className="text-gray-700 hover:text-hero-primary block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Configurações
-              </Link>
               <button
                 onClick={handleLogout}
                 className="text-gray-700 hover:text-hero-primary block w-full text-left px-3 py-2 rounded-md text-base font-medium"
