@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './contexts/AuthContext';
-import { LoginPage } from './pages/login/Index';
-import { RegisterPage } from './pages/register/Index';
+import { LoginPage } from './pages/login';
+import { RegisterPage } from './pages/register';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
-import { DashboardPage } from './pages/dashboard/Index';
+import { DashboardPage } from './pages/dashboard';
 import { ProjectsPage } from './pages/projects/List';
 
 function App() {
