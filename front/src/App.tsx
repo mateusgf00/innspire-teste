@@ -5,7 +5,7 @@ import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { DashboardPage } from './pages/dashboard';
-import { ProjectsPage } from './pages/projects/List';
+import { ProjectsPage } from './pages/projects/List/Index';
 
 function App() {
   return (
