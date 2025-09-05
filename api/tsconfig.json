@@ -20,5 +20,12 @@
     "paths": {
       "@/*": ["src/*"]
     }
-  }
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.e2e-spec.ts",
+    "test/**/*",
+    "coverage/**/*",
+    "node_modules"
+  ]
 }
