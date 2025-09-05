@@ -4,7 +4,7 @@
   "description": "Backend da plataforma HeroForce - Sistema de gestão e vendas de projetos heroicos",
   "main": "dist/main.js",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rm -rf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
