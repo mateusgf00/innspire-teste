@@ -19,7 +19,6 @@ import {
   AlertCircle, 
   Plus,
   Target,
-  Users,
   TrendingUp 
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -37,7 +36,6 @@ export function DashboardPage() {
   const [selectedProject, setSelectedProject] = useState<Project | undefined>();
 
   const characterInfo = getCharacterInfo(user?.character);
-
 
   const loadInitialData = async () => {
     try {
@@ -88,7 +86,7 @@ export function DashboardPage() {
     setShowEditModal(true);
   };
 
-  const handleProjectSuccess = (updatedProject: Project) => {
+  const handleProjectSuccess = () => {
     loadInitialData();
     loadProjects();
     toast.success('Dados atualizados com sucesso!');
@@ -229,22 +227,6 @@ export function DashboardPage() {
           )}
         </div>
 
-        {user?.role === UserRole.HERO && projects.length > 0 && (
-          <div className="bg-gradient-to-r from-hero-primary to-hero-secondary rounded-lg p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-bold mb-2">
-                  Continue sua jornada heroica! 🚀
-                </h3>
-                <p className="text-blue-100">
-                  Você tem {projects.filter(p => p.responsibleId === user.id && p.status !== 'completed').length} projetos em andamento.
-                  Mantenha o foco e alcance suas metas!
-                </p>
-              </div>
-              <Users className="h-12 w-12 text-blue-200" />
-            </div>
-          </div>
-        )}
       </div>
       <ProjectFormModal
         isOpen={showCreateModal}
@@ -261,6 +243,7 @@ export function DashboardPage() {
         project={selectedProject}
         onSuccess={handleProjectSuccess}
       />
+
     </Layout>
   );
 }

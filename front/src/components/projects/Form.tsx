@@ -23,7 +23,8 @@ import {
   Target,
   Star,
   Eye,
-  Rocket
+  Rocket,
+  BarChart3
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -47,6 +48,12 @@ interface ProjectFormData {
   excellenceGoal: number;
   transparencyGoal: number;
   ambitionGoal: number;
+  agilityProgress: number;
+  enchantmentProgress: number;
+  efficiencyProgress: number;
+  excellenceProgress: number;
+  transparencyProgress: number;
+  ambitionProgress: number;
 }
 
 const getValueIcon = (key: string) => {
@@ -89,6 +96,12 @@ export function ProjectForm({ project, onSuccess, onCancel, isModal = false }: P
       excellenceGoal: project?.excellenceGoal || 50,
       transparencyGoal: project?.transparencyGoal || 50,
       ambitionGoal: project?.ambitionGoal || 50,
+      agilityProgress: project?.agilityProgress || 0,
+      enchantmentProgress: project?.enchantmentProgress || 0,
+      efficiencyProgress: project?.efficiencyProgress || 0,
+      excellenceProgress: project?.excellenceProgress || 0,
+      transparencyProgress: project?.transparencyProgress || 0,
+      ambitionProgress: project?.ambitionProgress || 0,
     }
   });
 
@@ -122,6 +135,12 @@ export function ProjectForm({ project, onSuccess, onCancel, isModal = false }: P
       excellenceGoal: project?.excellenceGoal || 50,
       transparencyGoal: project?.transparencyGoal || 50,
       ambitionGoal: project?.ambitionGoal || 50,
+      agilityProgress: project?.agilityProgress || 0,
+      enchantmentProgress: project?.enchantmentProgress || 0,
+      efficiencyProgress: project?.efficiencyProgress || 0,
+      excellenceProgress: project?.excellenceProgress || 0,
+      transparencyProgress: project?.transparencyProgress || 0,
+      ambitionProgress: project?.ambitionProgress || 0,
     });
   }, [project, reset]);
 
@@ -347,6 +366,95 @@ export function ProjectForm({ project, onSuccess, onCancel, isModal = false }: P
               />
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+            <BarChart3 className="h-5 w-5 mr-2" />
+            Progresso Atual dos Valores
+          </h3>
+          <span className="text-sm text-gray-500">
+            Atualize o progresso real de cada valor
+          </span>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {HERO_FORCE_VALUES.map((value) => {
+            const goalValue = watchedValues[value.key];
+            const progressValue = watchedValues[value.progressKey];
+            const percentage = goalValue > 0 ? Math.round((progressValue / goalValue) * 100) : 0;
+            const isGoalMet = progressValue >= goalValue;
+            
+            return (
+              <div key={value.progressKey} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center text-sm font-medium text-gray-700">
+                    {getValueIcon(value.key)}
+                    <span className="ml-2">{value.name}</span>
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-semibold text-gray-900">
+                      {progressValue}/{goalValue}
+                    </span>
+                    {isGoalMet && goalValue > 0 && (
+                      <span className="text-gray-600 text-sm">✓</span>
+                    )}
+                  </div>
+                </div>
+                
+                <Controller
+                  name={value.progressKey}
+                  control={control}
+                  rules={{ min: 0, max: 100 }}
+                  render={({ field }) => (
+                    <div className="space-y-2">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="1"
+                        {...field}
+                        onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                        style={{
+                          background: `linear-gradient(to right, #9CA3AF 0%, #9CA3AF ${field.value}%, #E5E7EB ${field.value}%, #E5E7EB 100%)`
+                        }}
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>Progresso: {field.value}%</span>
+                        <span className="font-medium text-gray-600">
+                          {percentage}% da meta {isGoalMet ? '✓' : ''}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                />
+              </div>
+            );
+          })}
+        </div>
+        
+        <div className="bg-gray-50 rounded-lg p-3">
+          <div className="text-sm text-gray-600 mb-2">Progresso Geral</div>
+          {(() => {
+            const totalGoals = HERO_FORCE_VALUES.reduce((sum, value) => sum + watchedValues[value.key], 0);
+            const totalProgress = HERO_FORCE_VALUES.reduce((sum, value) => sum + watchedValues[value.progressKey], 0);
+            const overallPercentage = totalGoals > 0 ? Math.round((totalProgress / totalGoals) * 100) : 0;
+            
+            return (
+              <div className="flex items-center space-x-3">
+                <span className="font-medium">{overallPercentage}%</span>
+                <div className="flex-1 bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-gray-400 h-2 rounded-full"
+                    style={{ width: `${overallPercentage}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
