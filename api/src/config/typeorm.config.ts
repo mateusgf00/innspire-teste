@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 import { User } from '../users/entities/user.entity';
 import { Project } from '../projects/entities/project.entity';
 
-// Load environment variables from .env file if it exists
 config();
 
 const configService = new ConfigService();
